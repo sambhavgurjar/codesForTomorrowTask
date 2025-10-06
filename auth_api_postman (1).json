@@ -1,0 +1,80 @@
+{
+  "info": {
+    "name": "Authentication API",
+    "_postman_id": "12345678-abcd-efgh-ijkl-1234567890ab",
+    "description": "Authentication API collection for MERN application. Includes endpoints for user registration, login, fetching user details, forgot password, and reset password. Designed for testing authentication workflows with JWT authorization.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Sambhav\",\n  \"lastName\": \"Verma\",\n  \"email\": \"sambhav@example.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {"raw": "{{base_url}}/api/v1/auth/register", "host": ["{{base_url}}"], "path": ["api", "v1", "auth", "register"]},
+        "description": "Registers a new user. Returns success message if the registration is successful, or an error if the email already exists."
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"sambhav@example.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {"raw": "{{base_url}}/api/v1/auth/login", "host": ["{{base_url}}"], "path": ["api", "v1", "auth", "login"]},
+        "description": "Authenticates the user using email and password. Returns JWT token and user details on success, or an error if login fails."
+      },
+      "response": []
+    },
+    {
+      "name": "Get User Details",
+      "request": {
+        "method": "GET",
+        "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+        "url": {"raw": "{{base_url}}/api/v1/auth/user-detail", "host": ["{{base_url}}"], "path": ["api", "v1", "auth", "user-detail"]},
+        "description": "Fetches details of the logged-in user. Requires valid JWT token in the Authorization header. Returns user details without password."
+      },
+      "response": []
+    },
+    {
+      "name": "Forgot Password",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"sambhav@example.com\"\n}"
+        },
+        "url": {"raw": "{{base_url}}/api/v1/auth/forgot-password", "host": ["{{base_url}}"], "path": ["api", "v1", "auth", "forgot-password"]},
+        "description": "Sends a password reset link to the user's registered email. The link contains a token valid for 5 minutes."
+      },
+      "response": []
+    },
+    {
+      "name": "Reset Password",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"password\": \"newpassword123\"\n}"
+        },
+        "url": {"raw": "{{base_url}}/api/v1/auth/reset-password/:resetToken", "host": ["{{base_url}}"], "path": ["api", "v1", "auth", "reset-password", ":resetToken"]},
+        "description": "Resets the password using the token received in the email link. Updates the user's password and invalidates the token."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {"key": "base_url", "value": "http://localhost:5050"},
+    {"key": "token", "value": ""}
+  ]
+}
